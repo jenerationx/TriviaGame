@@ -1,0 +1,21 @@
+body {
+    background-image: url(../images/hogwarts1.jpg);
+    background-size: cover;
+
+}
+@font-face {
+    font-family: "HARRY_P";
+    src: url(../images/HARRYP__.TTF);
+  }
+.page-header {
+    background: none;
+    font-family: "HARRY_P" !important;
+    color: rgb(255, 208, 0);
+    text-align: center;
+  }
+  h1 {
+      font-size: 100px !important;
+  }
+.modal-content {
+    background: rgba(50, 54, 54, 0.5);
+}
