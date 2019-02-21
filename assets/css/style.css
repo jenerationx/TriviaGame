@@ -1,7 +1,6 @@
 body {
     background-image: url(../images/hogwarts1.jpg);
     background-size: cover;
-
 }
 @font-face {
     font-family: "HARRY_P";
@@ -18,4 +17,7 @@ body {
   }
 .modal-content {
     background: rgba(50, 54, 54, 0.5);
+}
+.game-container {
+  display: none;
 }
