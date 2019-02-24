@@ -86,6 +86,8 @@ var questions = [
         correct: 2
     },
 ]
+var lastQuestionIndex = (questions.length - 1);
+
 // click start button to begin-done
 document.getElementById("start").onclick = function () { startGame() };
 function startGame() {
@@ -117,17 +119,23 @@ function questionTimer() {
     }
     else if (timer === 0) {
         guessTimeout();
+        // if (questionIndex === questions.length) {
+        //     showScore();
+        // }
+        // else {
+        //     questionIndex++;
+        // };
     }
 };
 function checkGuess(guess) {
     if (guess === questions[questionIndex].correct) {
-        console.log("correct!");
         guessCorrect();
     }
     else {
         guessWrong();
-        console.log("incorrect!");
-    }
+        // console.log("incorrect!");
+    };
+
 
 }
 // * If the player selects the correct answer, show a screen congratulating them for choosing the right option. 
@@ -139,39 +147,36 @@ function guessCorrect() {
     $("#choices").hide();
     $("#question").text("Correct!");
     right++;
-    console.log(right);
+    console.log("correct: " + right);
     $("#correct-img").show();
     setTimeout(startGame, 3000);
-    if (questionIndex < questions.length) {
-        questionIndex++;
-    }
-    else {
+    questionIndex++;
+    if (questionIndex > lastQuestionIndex) {
+        clearInterval(intervalId);
         showScore();
-    }
-
+    };
     // show the correct answer - done but needs improvement
     // show hermione pic - done
 
 };
 
 //   * If the player chooses the wrong answer, tell the player they selected the wrong option and then display the correct answer. 
-// Wait a few seconds, then show the next question.
+// Wait a few seconds, then show the next question. - done
 function guessWrong() {
     clearInterval(intervalId);
     $("#question").text("Wrong!");
     $("#choices").hide();
     $("#correct-answer").show();
-    $("#correct-answer").text("The correct answer was choice " + questions[questionIndex].correct);
+    $("#correct-answer").text("The correct answer was Choice " + questions[questionIndex].correct);
     $("#incorrect-img").show();
     setTimeout(startGame, 3000);
     wrong++;
-    console.log(wrong);
-    if (questionIndex < questions.length) {
-        questionIndex++;
-    }
-    else {
+    console.log("incorrect: " + wrong);
+    questionIndex++;
+    if (questionIndex > lastQuestionIndex) {
+        clearInterval(intervalId);
         showScore();
-    }
+    };
 
     // put Wrong! in the question div and correct answer in the correct-answer id. Display appropriate image. set a 3 sec timeout, question index ++, startquestions
 };
@@ -182,28 +187,31 @@ function guessTimeout() {
     $("#timer").html("Time's up!");
     $("#choices").hide();
     $("#correct-answer").show();
-    $("#correct-answer").text("The correct answer was choice " + questions[questionIndex].correct);
+    $("#correct-answer").text("The correct answer was Choice " + questions[questionIndex].correct);
     $("#timesup-img").show();
     setTimeout(startGame, 3000);
     outoftime++;
-    console.log(outofime);
-    if (questionIndex < questions.length) {
-        questionIndex++;
-    }
-    else if (questionIndex == questions.length) {
+    console.log("unanswered: " + outoftime);
+    questionIndex++;
+    if (questionIndex > lastQuestionIndex) {
+        clearInterval(intervalId);
         showScore();
-    }
-
+    };
 };
 
 function showScore() {
-    $("#choices").hide();
+    clearInterval(intervalId);
     $("#question").hide();
+    $("#choices").hide();
+    $("#correct-answer").hide();
     $("#score").show();
     $("#gameover-img").show();
-    clearInterval(intervalId);
+    $("#right").text("Correct answers: " + right);
+    $("#wrong").text("Incorrect answers: " + wrong);
+    $("#outoftime").text("Unanswered: " + outoftime);
+    document.getElementById("start-over").onclick = function () { startGame() };
 
 
-}   // * On the final screen, show the number of correct answers, incorrect answers,
+};   // * On the final screen, show the number of correct answers, incorrect answers,
     // and an option to restart the game (without reloading the page). if questionIndex === questions.length
 

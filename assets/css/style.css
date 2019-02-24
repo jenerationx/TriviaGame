@@ -30,14 +30,11 @@ body {
 #timesup-img {
   display: none;
 }
-#gameover-img {
-  display: none;
-}
 .img-thumbnail {
   padding: 0;
   border: 0;
   }
-  #score {
-    display: none;
-  }
+#score {
+  display: none;
+}
   
