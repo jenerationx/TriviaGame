@@ -202,8 +202,8 @@ function guessTimeout() {
 function showScore() {
     clearInterval(intervalId);
     $("#question").hide();
-    $("#choices").hide();
-    $("#correct-answer").hide();
+    $("#choices").empty();
+    $("#correct-answer").empty();
     $("#score").show();
     $("#gameover-img").show();
     $("#right").text("Correct answers: " + right);
