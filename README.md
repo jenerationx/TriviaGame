@@ -4,7 +4,7 @@ This my version of the Trivia Game with Timer assignment.
 
 [Click here to go to the live app!](https://jenerationx.github.io/TriviaGame/)
 
-![Screenshot of Trivia Game](https://github.com/jenerationx/TriviaGame/assets/images/screenshot.png)
+![Screenshot of Trivia Game](https://github.com/jenerationx/TriviaGame/blob/master/assets/images/screenshot.png)
 
 ## Directions:
 
