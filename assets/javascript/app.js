@@ -1,217 +1,196 @@
-var right = 0;
-var wrong = 0;
-var outoftime = 0
-var questionIndex = 0;
+var card = $("#quiz-area");
+var countStartNumber = 15;
+var timer;
+
 // * You'll create a trivia game that shows only one question until the player answers it or their time runs out.
 // make 10 questions and answers in an object - done
 var questions = [
     {
         question: "What house at Hogwarts does Harry belong to?",
-        choice1: "Hufflepuff",
-        choice2: "Gryffindoor",
-        choice3: "Slytherin",
-        choice4: "Ravenclaw",
-        correct: 2
+        answers: ["Hufflepuff", "Gryffindoor", "Slytherin", "Ravenclaw"],
+        correct: "Gryffindoor"
     },
     {
         question: "What position does Harry play on his Quidditch team?",
-        choice1: "Chaser",
-        choice2: "Keeper",
-        choice3: "Bludger",
-        choice4: "Seeker",
-        correct: 4
+        answers: ["Chaser", "Keeper", "Bludger", "Seeker"],
+        correct: "Seeker"
     },
     {
         question: "Who is Fluffy?",
-        choice1: "A 3-headed dog",
-        choice2: "Harry's owl",
-        choice3: "Hermione's cat",
-        choice4: "Hagrid's dragon",
-        correct: 1
+        answers: ["A 3-headed dog", "Harry's owl", "Hermione's cat", "Hagrid's dragon"],
+        correct: "A 3-headed dog"
     },
     {
         question: "Who kills Professor Dumbledore?",
-        choice1: "Draco Malfoy",
-        choice2: "Severus Snape",
-        choice3: "Bellatrix Lestrange",
-        choice4: "Sirius Black",
-        correct: 2
+        answers: ["Draco Malfoy", "Severus Snape", "Bellatrix Lestrange", "Sirius Black"],
+        correct: "Severus Snape"
     },
     {
         question: "Who is Grawp?",
-        choice1: "Ron's rat",
-        choice2: "A Centaur",
-        choice3: "Hagrid's brother",
-        choice4: "The Malfoys' house elf",
-        correct: 3
+        answers: ["Ron's rat", "A Centaur", "Hagrids brother", "The Malfoys' house elf"],
+        correct: "Hagrids brother"
     },
     {
         question: "How did Hermione take extra lessons her third year?",
-        choice1: "The pensive",
-        choice2: "Night classes",
-        choice3: "She cloned herself",
-        choice4: "A time-turner",
-        correct: 4
+        answers: ["The pensive", "Night classes", "She cloned herself", "A time-turner"],
+        correct: "A time-turner"
     },
     {
         question: "According to the Sorting Hat, what qualities does Ravenclaw possess?",
-        choice1: "Daring and Nerve",
-        choice2: "Patience and Loyalty",
-        choice3: "Cunning and Deceit",
-        choice4: "Wit and Learning",
-        correct: 4
+        answers: ["Daring and Nerve", "Patience and Loyalty", "Cunning and Deceit", "Wit and Learning"],
+        correct: "Wit and Learning"
     },
     {
         question: "What is Harry's Patronus?",
-        choice1: "A Stag",
-        choice2: "An Owl",
-        choice3: "A Unicorn",
-        choice4: "A Doe",
-        correct: 1
+        answers: ["A Stag", "An Owl", "A Unicorn", "A Doe"],
+        correct: "A Stag"
     },
     {
         question: "Which is not a method of transport for wizards?",
-        choice1: "Floo powder",
-        choice2: "Apparation",
-        choice3: "Aparecium",
-        choice4: "A portkey",
-        correct: 3
+        answers: ["Floo powder", "Apparation", "Aparecium", "A portkey"],
+        correct: "Aparecium"
     },
     {
         question: "Who dies in the third Tri-Wizard Tournament task?",
-        choice1: "Viktor Crum",
-        choice2: "Cedric Diggory",
-        choice3: "Fleur Delacour",
-        choice4: "Madame Maxime",
-        correct: 2
+        answers: ["Viktor Crum", "Cedric Diggory", "Fleur Delacour", "Madame Maxime"],
+        correct: "Cedric Diggory"
     },
 ]
-var lastQuestionIndex = (questions.length - 1);
 
-// click start button to begin-done
-document.getElementById("start").onclick = function () { startGame() };
-function startGame() {
-    $("#start-container").hide();
-    $("#game-container").show();
-    $("#choices").show();
-    $("#correct-answer").hide();
-    $(".img-thumbnail").hide();
-    intervalId = setInterval(questionTimer, 1000);
-    startQuestions();
-};
-// display first question-done
-function startQuestions() {
-    timer = 16;
-    questionTimer();
-    // tell the html where to set content-done
-    $("#question").text(questions[questionIndex].question);
-    $("#choice1").text(questions[questionIndex].choice1);
-    $("#choice2").text(questions[questionIndex].choice2);
-    $("#choice3").text(questions[questionIndex].choice3);
-    $("#choice4").text(questions[questionIndex].choice4);
-};
+var game = {
 
-// set a timer for 15 seconds, counting down-done
-function questionTimer() {
-    if (timer > 0) {
-        timer--;
-        $("#timer").html(timer);
+    questions: questions,
+    currentQuestion: 0,
+    counter: countStartNumber,
+    correct: 0,
+    incorrect: 0,
+
+    countdown: function () {
+        game.counter--;
+        $("#counter-number").text(game.counter);
+        if (game.counter === 0) {
+            console.log("TIME'S UP");
+            game.timeUp();
+        }
+    },
+
+    loadQuestion: function () {
+
+        timer = setInterval(game.countdown, 1000);
+
+        card.html("<h2>" + questions[this.currentQuestion].question + "</h2>");
+
+        for (var i = 0; i < questions[this.currentQuestion].answers.length; i++) {
+            card.append("<button class='btn btn-secondary btn-lg btn-block answer-button' id='button' data-name='" + questions[this.currentQuestion].answers[i]
+                + "'>" + questions[this.currentQuestion].answers[i] + "</button>");
+        }
+    },
+
+    nextQuestion: function () {
+        game.counter = countStartNumber;
+        $("#counter-number").text(game.counter);
+        game.currentQuestion++;
+        game.loadQuestion();
+    },
+
+    timeUp: function () {
+
+        clearInterval(timer);
+
+        $("#counter-number").html(game.counter);
+
+        card.html("<h2>Out of Time!</h2>");
+        card.append("<h3>The Correct Answer was: " + questions[this.currentQuestion].correct);
+        card.append("<img class='img-fluid' src='assets/images/timesup.jpg' />");
+
+        if (game.currentQuestion === questions.length - 1) {
+            setTimeout(game.results, 3 * 1000);
+        }
+        else {
+            setTimeout(game.nextQuestion, 3 * 1000);
+        }
+    },
+
+    results: function () {
+
+        clearInterval(timer);
+
+        card.html("");
+
+        $("#counter-number").text(game.counter);
+        card.append("<img class='img-fluid' src='assets/images/end.jpg'/>")
+        card.append("<h3>Correct Answers: " + game.correct + "</h3>");
+        card.append("<h3>Incorrect Answers: " + game.incorrect + "</h3>");
+        card.append("<h3>Unanswered: " + (questions.length - (game.incorrect + game.correct)) + "</h3>");
+        card.append("<br><button class='btn btn-lg btn-secondary btn-block' id='start-over'>Start Over?</button>");
+    },
+
+    clicked: function (e) {
+        clearInterval(timer);
+        if ($(e.target).attr("data-name") === questions[this.currentQuestion].correct) {
+            this.answeredCorrectly();
+        }
+        else {
+            this.answeredIncorrectly();
+        }
+    },
+
+    answeredIncorrectly: function () {
+
+        game.incorrect++;
+
+        clearInterval(timer);
+
+        card.html("<h2>Wrong!</h2>");
+        card.append("<h3>The Correct Answer was: " + questions[game.currentQuestion].correct + "</h3>");
+        card.append("<img class= 'img-fluid' src='assets/images/incorrect.jpg' />");
+
+        if (game.currentQuestion === questions.length - 1) {
+            setTimeout(game.results, 3 * 1000);
+        }
+        else {
+            setTimeout(game.nextQuestion, 3 * 1000);
+        }
+    },
+
+    answeredCorrectly: function () {
+
+        clearInterval(timer);
+
+        game.correct++;
+
+        card.html("<h2>Correct!</h2>");
+        card.append("<img class='img-fluid' src='assets/images/correct.jpg' />");
+
+        if (game.currentQuestion === questions.length - 1) {
+            setTimeout(game.results, 3 * 1000);
+        }
+        else {
+            setTimeout(game.nextQuestion, 3 * 1000);
+        }
+    },
+
+    reset: function () {
+        this.currentQuestion = 0;
+        this.counter = countStartNumber;
+        this.correct = 0;
+        this.incorrect = 0;
+        this.loadQuestion();
     }
-    else if (timer === 0) {
-        guessTimeout();
-        // if (questionIndex === questions.length) {
-        //     showScore();
-        // }
-        // else {
-        //     questionIndex++;
-        // };
-    }
-};
-function checkGuess(guess) {
-    if (guess === questions[questionIndex].correct) {
-        guessCorrect();
-    }
-    else {
-        guessWrong();
-        // console.log("incorrect!");
-    };
-
-
-}
-// * If the player selects the correct answer, show a screen congratulating them for choosing the right option. 
-// After a few seconds, display the next question -- do this without user input.  - done  
-// put Correct! in the question div and correct answer in the correct-answer id. Display appropriate image. set a 3 sec timeout, question index ++, startquestions - done
-
-function guessCorrect() {
-    clearInterval(intervalId);
-    $("#choices").hide();
-    $("#question").text("Correct!");
-    right++;
-    console.log("correct: " + right);
-    $("#correct-img").show();
-    setTimeout(startGame, 3000);
-    questionIndex++;
-    if (questionIndex > lastQuestionIndex) {
-        clearInterval(intervalId);
-        showScore();
-    };
-    // show the correct answer - done but needs improvement
-    // show hermione pic - done
-
 };
 
-//   * If the player chooses the wrong answer, tell the player they selected the wrong option and then display the correct answer. 
-// Wait a few seconds, then show the next question. - done
-function guessWrong() {
-    clearInterval(intervalId);
-    $("#question").text("Wrong!");
-    $("#choices").hide();
-    $("#correct-answer").show();
-    $("#correct-answer").text("The correct answer was Choice " + questions[questionIndex].correct);
-    $("#incorrect-img").show();
-    setTimeout(startGame, 3000);
-    wrong++;
-    console.log("incorrect: " + wrong);
-    questionIndex++;
-    if (questionIndex > lastQuestionIndex) {
-        clearInterval(intervalId);
-        showScore();
-    };
+// CLICK EVENTS
 
-    // put Wrong! in the question div and correct answer in the correct-answer id. Display appropriate image. set a 3 sec timeout, question index ++, startquestions
-};
-//   * If the player runs out of time, tell the player that time's up and display the correct answer. 
-// Wait a few seconds, then show the next question. - done
-function guessTimeout() {
-    clearInterval(intervalId);
-    $("#timer").html("Time's up!");
-    $("#choices").hide();
-    $("#correct-answer").show();
-    $("#correct-answer").text("The correct answer was Choice " + questions[questionIndex].correct);
-    $("#timesup-img").show();
-    setTimeout(startGame, 3000);
-    outoftime++;
-    console.log("unanswered: " + outoftime);
-    questionIndex++;
-    if (questionIndex > lastQuestionIndex) {
-        clearInterval(intervalId);
-        showScore();
-    };
-};
+$(document).on("click", "#start-over", function () {
+    game.reset();
+});
 
-function showScore() {
-    clearInterval(intervalId);
-    $("#question").hide();
-    $("#choices").empty();
-    $("#correct-answer").empty();
-    $("#score").show();
-    $("#gameover-img").show();
-    $("#right").text("Correct answers: " + right);
-    $("#wrong").text("Incorrect answers: " + wrong);
-    $("#outoftime").text("Unanswered: " + outoftime);
-    document.getElementById("start-over").onclick = function () { startGame() };
+$(document).on("click", ".answer-button", function (e) {
+    game.clicked(e);
+});
 
-
-};   // * On the final screen, show the number of correct answers, incorrect answers,
-    // and an option to restart the game (without reloading the page). if questionIndex === questions.length
+$(document).on("click", "#start", function () {
+    $("#sub-wrapper").prepend("<div class='modal-header text-light text-left'><h2>Time Remaining: <span id='counter-number'>15</span> Seconds</h2></div>");
+    game.loadQuestion();
+});
 

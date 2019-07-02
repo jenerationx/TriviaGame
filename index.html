@@ -23,50 +23,16 @@
 
 <body>
     <div class="container">
-        <div class="page-header">
-            <h1>Harry Potter Trivia</h1>
-        </div>
-    </div>
-    <div class="start-container" id="start-container">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <button class="btn btn-lg btn-secondary" id="start">Start!</button>
-            </div>
-        </div>
-    </div>
-    <div class="game-container" id="game-container">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header text-light">
-                    <h3>Time remaining: <span class="timer" id="timer"></span></h3>
-                </div>
-                <div class="modal-body" id="questions-answers">
-                    <h3 id="question" class="text-light"></h3>
-                    <h3 id="correct-answer" class="text-light"></h3>
-                    <div id="choices">
-                        <button class="choice btn btn-lg btn-secondary btn-block" id="1" onclick="checkGuess(1)"
-                            value="1"><span id="choice1" value="1"></span></button>
-                        <button class="choice btn btn-lg btn-secondary btn-block" id="2" onclick="checkGuess(2)"
-                            value="2"><span id="choice2" value="2"></span></button>
-                        <button class="choice btn btn-lg btn-secondary btn-block" id="3" onclick="checkGuess(3)"
-                            value="3"><span id="choice3" value="3"></span></button>
-                        <button class="choice btn btn-lg btn-secondary btn-block" id="4" onclick="checkGuess(4)"
-                            value="4"><span id="choice4" value="4"></span></button>
+        <div id="wrapper">
+            <h1 class="page-header">Harry Potter Trivia</h1>
+            <div class="modal-dialog text-left">
+                <div class="text-white modal-content text-left" id="sub-wrapper">
+                    <div class="text-light modal-body" id="quiz-area">
+                        <button class="btn btn-lg btn-secondary btn-block" id="start">Start</button>
                     </div>
-                    <img class="img-thumbnail" id="correct-img" src="assets/images/correct.jpg"></img>
-                    <img class="img-thumbnail" id="incorrect-img" src="assets/images/incorrect.jpg"></img>
-                    <img class="img-thumbnail" id="timesup-img" src="assets/images/timesup.jpg"></img>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="modal-body text-light" id="score">
-        <img class="img-thumbnail" id="gameover-img" src="assets/images/end.jpg"></img>
-        <h3 id="right"></h3>
-        <h3 id="wrong"></h3>
-        <h3 id="outoftime"></h3>
-        <h3>Want to try again?</h3>
-        <button class="btn btn-lg btn-secondary" id="start-over">Start over!</button>
     </div>
 
     <script type="text/javascript" src="assets/javascript/app.js">

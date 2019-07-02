@@ -18,23 +18,8 @@ body {
 .modal-content {
     background: rgba(50, 54, 54, 0.5);
 }
-.game-container {
-  display: none;
-}
-#correct-img {
-  display: none;
-}
-#incorrect-img {
-  display: none;
-}
-#timesup-img {
-  display: none;
-}
 .img-thumbnail {
   padding: 0;
   border: 0;
   }
-#score {
-  display: none;
-}
   
