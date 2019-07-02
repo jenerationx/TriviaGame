@@ -8,52 +8,52 @@ var questions = [
     {
         question: "What house at Hogwarts does Harry belong to?",
         answers: ["Hufflepuff", "Gryffindoor", "Slytherin", "Ravenclaw"],
-        correct: "Gryffindoor"
+        correctAns: "Gryffindoor"
     },
     {
         question: "What position does Harry play on his Quidditch team?",
         answers: ["Chaser", "Keeper", "Bludger", "Seeker"],
-        correct: "Seeker"
+        correctAns: "Seeker"
     },
     {
         question: "Who is Fluffy?",
         answers: ["A 3-headed dog", "Harry's owl", "Hermione's cat", "Hagrid's dragon"],
-        correct: "A 3-headed dog"
+        correctAns: "A 3-headed dog"
     },
     {
         question: "Who kills Professor Dumbledore?",
         answers: ["Draco Malfoy", "Severus Snape", "Bellatrix Lestrange", "Sirius Black"],
-        correct: "Severus Snape"
+        correctAns: "Severus Snape"
     },
     {
         question: "Who is Grawp?",
         answers: ["Ron's rat", "A Centaur", "Hagrids brother", "The Malfoys' house elf"],
-        correct: "Hagrids brother"
+        correctAns: "Hagrids brother"
     },
     {
         question: "How did Hermione take extra lessons her third year?",
         answers: ["The pensive", "Night classes", "She cloned herself", "A time-turner"],
-        correct: "A time-turner"
+        correctAns: "A time-turner"
     },
     {
         question: "According to the Sorting Hat, what qualities does Ravenclaw possess?",
         answers: ["Daring and Nerve", "Patience and Loyalty", "Cunning and Deceit", "Wit and Learning"],
-        correct: "Wit and Learning"
+        correctAns: "Wit and Learning"
     },
     {
         question: "What is Harry's Patronus?",
         answers: ["A Stag", "An Owl", "A Unicorn", "A Doe"],
-        correct: "A Stag"
+        correctAns: "A Stag"
     },
     {
         question: "Which is not a method of transport for wizards?",
         answers: ["Floo powder", "Apparation", "Aparecium", "A portkey"],
-        correct: "Aparecium"
+        correctAns: "Aparecium"
     },
     {
         question: "Who dies in the third Tri-Wizard Tournament task?",
         answers: ["Viktor Crum", "Cedric Diggory", "Fleur Delacour", "Madame Maxime"],
-        correct: "Cedric Diggory"
+        correctAns: "Cedric Diggory"
     },
 ]
 
@@ -100,7 +100,7 @@ var game = {
         $("#counter-number").html(game.counter);
 
         card.html("<h2>Out of Time!</h2>");
-        card.append("<h3>The Correct Answer was: " + questions[this.currentQuestion].correct);
+        card.append("<h3>The Correct Answer was: " + questions[this.currentQuestion].correctAns);
         card.append("<img class='img-fluid' src='assets/images/timesup.jpg' />");
 
         if (game.currentQuestion === questions.length - 1) {
@@ -127,7 +127,7 @@ var game = {
 
     clicked: function (e) {
         clearInterval(timer);
-        if ($(e.target).attr("data-name") === questions[this.currentQuestion].correct) {
+        if ($(e.target).attr("data-name") === questions[this.currentQuestion].correctAns) {
             this.answeredCorrectly();
         }
         else {
@@ -142,7 +142,7 @@ var game = {
         clearInterval(timer);
 
         card.html("<h2>Wrong!</h2>");
-        card.append("<h3>The Correct Answer was: " + questions[game.currentQuestion].correct + "</h3>");
+        card.append("<h3>The Correct Answer was: " + questions[game.currentQuestion].correctAns + "</h3>");
         card.append("<img class= 'img-fluid' src='assets/images/incorrect.jpg' />");
 
         if (game.currentQuestion === questions.length - 1) {
